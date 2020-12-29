@@ -7,12 +7,15 @@ run()
 })
 .catch((err)=>{
   console.error(`error: ${err.stack}`);
-  core.setFailed(error.message);
 });
 
 async function run() {
 
   const token = process.env['API_TOKEN'];
+
+  if (!token) {
+    throw new Error('No token set. Set API_TOKEN');
+  }
   
   let {client, repo} = await login(token, 'potmo/fact-a-day');
   
