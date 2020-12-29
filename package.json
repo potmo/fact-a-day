@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@actions/core": "^1.2.6",
+    "fs-extra": "^9.0.1",
     "octonode": "^0.10.0"
   },
   "devDependencies": {},

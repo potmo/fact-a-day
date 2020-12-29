@@ -1,5 +1,6 @@
 "use strict";
 const github = require('octonode');
+const fs = require('fs-extra');
 
 run()
 .then(()=>{
@@ -33,6 +34,18 @@ async function run() {
   let published_issue = await publishIssue(client, repo, unused_issue)
 
   unpublishIssues(client, repo, current_issues);
+
+  let html = `
+  <html><head><title>Facts</title></head>
+  <body>
+  <p>title: ${published_issue.title}</p>
+  <p>body: ${published_issue.body}</p>
+  </body>
+  </html>
+  `
+
+  await fs.ensureDir('./build')
+  await fs.writeFile('./build/index.html', html, {encoding: 'utf8'});
 
   console.log(`new issue has title: ${published_issue.title} and body ${published_issue.body}`)
 
