@@ -1,0 +1,21 @@
+{
+  "name": "fact-a-day",
+  "version": "1.0.0",
+  "description": "Plumming for fact-a-day site",
+  "main": "index.js",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "octonode": "^0.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/potmo/fact-a-day.git"
+  },
+  "author": "Nisse Bergman",
+  "license": "MIT",
+  "homepage": "https://github.com/potmo/fact-a-day#readme"
+}
