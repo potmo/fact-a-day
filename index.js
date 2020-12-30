@@ -1,6 +1,6 @@
 "use strict";
 const github = require('octonode');
-const fs = require('fs-extra');
+const renderer = require('./renderer')
 
 run()
 .then(()=>{
@@ -28,26 +28,49 @@ async function run() {
     throw new Error("No unused issues");
   }
 
-  // take first
-  let unused_issue = unused_issues[0];
+  let unused_issue = selectUnusedIssue(unused_issues);
+
+  renderer.render(unused_issue.title, unused_issue.body, './build');
 
   let published_issue = await publishIssue(client, repo, unused_issue)
 
   unpublishIssues(client, repo, current_issues);
+  
+  console.log(`new issue has title: ${published_issue.title}`)
 
-  let html = `
-  <html><head><title>Facts</title></head>
-  <body>
-  <p>title: ${published_issue.title}</p>
-  <p>body: ${published_issue.body}</p>
-  </body>
-  </html>
-  `
+  console.log(published_issue, published_issue.labels);
+}
 
-  await fs.ensureDir('./build')
-  await fs.writeFile('./build/index.html', html, {encoding: 'utf8'});
 
-  console.log(`new issue has title: ${published_issue.title} and body ${published_issue.body}`)
+function selectUnusedIssue(issues) {
+  let sorted = issues.sort(sortIssues);
+
+  sorted.forEach( i => {
+    console.log(`${i.number} ${i.title} ${i.labels.map(l => l.name).join(', ')}`);
+  })
+  return sorted[0];
+}
+
+function sortIssues(a, b) {
+  let aLabels = a.labels.map(l => l.name);
+  let bLabels = b.labels.map(l => l.name);
+
+  let today = (new Date()).toISOString().split('T')[0];
+
+  // this is the prio order
+  let prios = [today, 'top-prio', 'mid-prio', 'low-prio'];
+
+  // find the top prio label for both candidates
+  let aPrio = Math.min(...aLabels.map( l => prios.indexOf(l)).filter(i => i >= 0));
+  let bPrio = Math.min(...bLabels.map( l => prios.indexOf(l)).filter(i => i >= 0));
+
+
+  if (aPrio != bPrio) {
+    return aPrio - bPrio;
+  }
+
+  // if they are the same return on number
+  return a.number - b.number;
 
 }
 
@@ -70,19 +93,16 @@ async function unpublishIssue(client, repo, issue_id) {
   console.log(`unpublishing issue ${issue_id} of ${repo.name}`);
   let issue = repo.issue(issue_id);
   await issue.removeLabelAsync('current');
+  await issue.updateAsync({state: 'closed'});
 }
 
 async function publishIssue(client, repo, issue_data) {
 
   console.log(`publishing issue ${issue_data.number} of ${repo.name}`);
-  //let result = await repo.issue(issue_id).infoAsync();
-  //let modified = await result.createCommentAsync({body: 'Test Comment'});
-  //console.log(`issue: ${result}`, result)
- // console.log(modified)
 
   let issue = repo.issue(issue_data.number);
 
-  await issue.createCommentAsync({body: `Publishing as of ${new Date().toISOString()}`});
+  //await issue.createCommentAsync({body: `Publishing as of ${new Date().toISOString()}`});
   //await issue.updateAsync({state: 'closed'});
   await issue.addLabelsAsync(['published', 'current']);
 
