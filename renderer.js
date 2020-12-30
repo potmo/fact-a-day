@@ -185,9 +185,6 @@ async function render(title, body, output_dir) {
   let index = path.resolve(output_dir, 'index.html');
   await fs.writeFile(index, html, {encoding: 'utf8'});
 
-  console.log(html);
-
-
 }
 
 module.exports = {render}

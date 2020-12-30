@@ -38,7 +38,6 @@ async function run() {
   
   console.log(`new issue has title: ${published_issue.title}`)
 
-  console.log(published_issue, published_issue.labels);
 }
 
 
