@@ -1,13 +1,122 @@
 
-  <html><head><title>Facts</title></head>
-  <body>
-  <p>title: New fact format</p>
-  <p>body: This is some nice **facts**. This is also nice _right here_.
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+        <title>Fact-a-day: New fact format</title>
+        <style>
+        
+    html, body {
+      margin: 0;
+      height: 100%;
+    }
 
-bannas This is a link here. [google](http://www.google.com)
+    body {
+      font-family: 'Source Serif Pro', serif;  
+      font-weight: 300;
+    }
 
+    strong {
+      font-weight: 400;
+    }
+
+    h1 {
+      font-weight: 400;
+    }
+
+    .container {
+      min-width: 100%;
+      min-height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .content {  
+      max-width: 40em;
+      padding: 1em;
+    }
+
+    .footnotes {
+      font-size: 0.7em;
+    }
+
+    .footnotes-list {
+      padding-inline-start: 3em;
+    }
+
+    .footnotes-sep {
+      border: 0;
+      border-top: 1px solid #AAA;
+    }
+
+    h1 {
+      margin: 0em;
+    }
+
+    img {
+      display: block;
+      float: right;
+      margin: 1em;
+    }
+
+    figure {
+      display: block;
+      float: right;
+      margin: 1em;
+      max-width: 20%;
+      max-height: 80%;
+      margin: 1em;
+    }
+
+    figure img {
+      display: inline-block;
+      float: initial;
+      margin: 0em;
+      padding: 0;
+      width: 100%;
+    }
+
+    figcaption {
+      font-size: 0.7em;
+    }
+
+    .footnote-ref a:link {
+      color: black;
+    }
+
+    .footnote-ref a:visited {
+      color: black;
+    }
+
+    .footnote-ref a:hover {
+      color: black;
+    }
+
+    .footnote-ref a:active {
+      color: black;
+    }
+
+    .footnote-ref a {
+      text-decoration: inherit;
+      font-size: 0.7em;
+      margin-left: 0.2em;
+    }
+
+     
+        </style>
+      </head>
+      <body>
+        <div class='container'>
+          <div class='content'>
+            <h1>New fact format</h1>
+            <p>This is some nice <strong>facts</strong>. This is also nice <em>right here</em>.</p>
+<p>bannas This is a link here. <a href="http://www.google.com">google</a></p>
 <img width="123" alt="nisse" src="https://user-images.githubusercontent.com/1089422/103317427-6a283080-4a2b-11eb-9e4d-db9c5510e4ae.png">
-</p>
-  </body>
-  </html>
-  
+
+          </div>
+        </div>
+      </body>
+    </html>
+    
