@@ -114,7 +114,7 @@ async function getUnusedIssues(client, repo) {
   console.log(`loading unused issues for ${repo.name}`);
   
   let response = await client.search().issuesAsync({
-    q: `state:open+repo:${repo.name}+is:open+-label:holdback`,
+    q: `state:open+repo:${repo.name}+is:open+-label:published+-label:holdback`,
     sort: 'created',
     order: 'asc'
   });
@@ -128,7 +128,7 @@ async function getCurrentIssues(client, repo) {
   console.log(`loading current issues for ${repo.name}`);
   
   let response = await client.search().issuesAsync({
-    q: `state:open+repo:${repo.name}+is:open+label:current`,
+    q: `state:open+repo:${repo.name}+is:open+label:published+label:current`,
     sort: 'created',
     order: 'asc'
   });
