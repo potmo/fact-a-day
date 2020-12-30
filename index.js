@@ -93,7 +93,7 @@ async function unpublishIssue(client, repo, issue_id) {
   console.log(`unpublishing issue ${issue_id} of ${repo.name}`);
   let issue = repo.issue(issue_id);
   await issue.removeLabelAsync('current');
-  await issue.updateAsync({state: 'closed'});
+  //await issue.updateAsync({state: 'closed'});
 }
 
 async function publishIssue(client, repo, issue_data) {
