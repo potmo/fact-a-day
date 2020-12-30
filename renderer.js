@@ -67,6 +67,8 @@ async function render(title, body, output_dir) {
     body {
       font-family: 'Source Serif Pro', serif;  
       font-weight: 300;
+      background-color: rgb(255 253 252);
+      color: rgb(53 56 115);
     }
 
     strong {
