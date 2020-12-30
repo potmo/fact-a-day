@@ -3,6 +3,11 @@ on:
   push:
     branches:
       - main
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    # At 00:00 on Monday, Wednesday, and Friday.
+    # https://crontab.guru/#0_0_*_*_1,3,5
+    - cron:  '0 0 * * 1,3,5'
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest

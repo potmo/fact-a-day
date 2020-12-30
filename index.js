@@ -25,7 +25,7 @@ async function run() {
   let unused_issues = await getUnusedIssues(client, repo);
   
   if (unused_issues.length == 0) {
-    throw new Error("No unused issues");
+    console.log('No new facts to publish');
   }
 
   let unused_issue = selectUnusedIssue(unused_issues);
@@ -44,8 +44,9 @@ async function run() {
 function selectUnusedIssue(issues) {
   let sorted = issues.sort(sortIssues);
 
+  console.log('Facts priorities');
   sorted.forEach( i => {
-    console.log(`${i.number} ${i.title} ${i.labels.map(l => l.name).join(', ')}`);
+    console.log(` ${i.number} ${i.title} ${i.labels.map(l => l.name).join(', ')}`);
   })
   return sorted[0];
 }
