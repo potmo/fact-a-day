@@ -100,6 +100,15 @@ async function render(title, body, output_dir) {
       padding-inline-start: 3em;
     }
 
+    .footnotes-list p {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+
+    .footnotes-list li {
+      line-height: 1.3;
+    }
+
     .footnotes-sep {
       border: 0;
       border-top: 1px solid #AAA;
@@ -165,9 +174,16 @@ async function render(title, body, output_dir) {
     <!DOCTYPE html>
     <html lang="en">
       <head>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-1K6QRZ9L23"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-1K6QRZ9L23');
+      </script>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
-        <title>Fact-a-day: ${title}</title>
+        <title>${title}</title>
         <style>
         ${css} 
         </style>

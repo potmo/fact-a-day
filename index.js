@@ -13,6 +13,9 @@ run()
 async function run() {
 
   const token = process.env['API_TOKEN'];
+  const dryrun = Number(process.env['DRYRUN']) || false;
+
+  console.log(`Dryrunning: ${dryrun}`);
 
   if (!token) {
     throw new Error('No token set. Set API_TOKEN');
@@ -28,26 +31,34 @@ async function run() {
     console.log('No new facts to publish');
   }
 
-  let unused_issue = selectUnusedIssue(unused_issues);
+  let unused_issue = selectUnusedIssue(unused_issues, dryrun);
 
+  console.log('Rendering');
   renderer.render(unused_issue.title, unused_issue.body, './build');
 
-  let published_issue = await publishIssue(client, repo, unused_issue)
-
-  unpublishIssues(client, repo, current_issues);
-  
-  console.log(`new issue has title: ${published_issue.title}`)
+  if (dryrun) {
+    console.log(`dryrunning so don't publish and unpublish`);
+  } else {
+    let published_issue = await publishIssue(client, repo, unused_issue)
+    console.log(`new issue has title: ${published_issue.title}`)
+    unpublishIssues(client, repo, current_issues);  
+  }
 
 }
 
 
-function selectUnusedIssue(issues) {
+function selectUnusedIssue(issues, dryrun) {
   let sorted = issues.sort(sortIssues);
 
   console.log('Facts priorities');
   sorted.forEach( i => {
     console.log(` ${i.number} ${i.title} ${i.labels.map(l => l.name).join(', ')}`);
   })
+
+  if (dryrun) {
+    let dryrunned_issue = sorted.filter(a => a.number == dryrun)[0];
+    return dryrunned_issue;
+  }
   return sorted[0];
 }
 
@@ -71,7 +82,6 @@ function sortIssues(a, b) {
 
   // if they are the same return on number
   return a.number - b.number;
-
 }
 
 async function login(token, repo_name) {
